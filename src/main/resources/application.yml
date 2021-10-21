@@ -17,3 +17,10 @@ feign:
         connectionTimeout: 5000
         readTimeout: 5000
         loggerLevel: FULL
+
+springdoc:
+  packages-to-scan: com.bcf.routes
+  swagger-ui:
+    path: /api-doc
+    operations-sorter: method
+    tags-sorter: alpha
