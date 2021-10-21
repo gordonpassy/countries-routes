@@ -8,3 +8,12 @@ spring:
 logging:
   level:
     com.bcf.routes: info
+
+feign:
+  client:
+    config:
+      countries:
+        decoder: com.bcf.routes.remote.client.CountriesDecoder
+        connectionTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: FULL
