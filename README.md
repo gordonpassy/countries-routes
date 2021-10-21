@@ -14,7 +14,7 @@ The following guides illustrate how to run the application:
 * On your terminal, navigate to the root of the repo and run  `bash start.sh`. 
 * The application will start on port `8080` on your local machine. Ensure the port is not in use.
 * To view available endpoints open http://localhost:8080/api-doc on your browser
-* To stop the application from running; while on the terminal where the application is running press Ctrl+C
+* To stop the application from running; while on the terminal where the application is running press `Ctrl+C`
 
 Sample Request: `GET` http://localhost:8080/routing/KEN/RWA \
 Sample Response: ```{"route":["KEN","TZA","RWA"]}```
