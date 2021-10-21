@@ -19,7 +19,31 @@ class RouteService: IRouteService {
     lateinit var countriesApiClient: CountriesAPIClient
 
     override fun route(origin: String, destination: String): List<String>? {
-        return null
+        val countries: Countries    = countriesApiClient.fetchCountries()
+        val originCountryData       = countries.filter { country -> country.cca3 == origin }
+
+        val originCountry = if (originCountryData.isEmpty())
+            return null
+        else originCountryData.first()
+
+        if (originCountry.borders.isNullOrEmpty())
+            return null
+
+        if (originCountry.borders.contains(destination))
+            return listOf(origin, destination)
+
+        val mappedBorders = mutableSetOf<String>()
+        val path          = mutableListOf<String>()
+        val result        = mutableListOf<List<String>>()
+        val rootNode      = Node(origin)
+
+        mapBorders(rootNode, mappedBorders, destination, countries)
+        findAllRoutes(rootNode, path, result, destination)
+
+        return if (result.isEmpty())
+            null
+        else
+            result.sortedWith( compareBy { it.size }).first()
     }
 
     data class Node<T>(var value: T) {
