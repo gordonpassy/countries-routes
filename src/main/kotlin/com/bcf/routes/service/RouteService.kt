@@ -19,6 +19,8 @@ class RouteService: IRouteService {
     lateinit var countriesApiClient: CountriesAPIClient
 
     override fun route(origin: String, destination: String): List<String>? {
+        log.info("method=route request={}-{}", origin, destination)
+
         val countries: Countries    = countriesApiClient.fetchCountries()
         val originCountryData       = countries.filter { country -> country.cca3 == origin }
 
@@ -40,6 +42,7 @@ class RouteService: IRouteService {
         mapBorders(rootNode, mappedBorders, destination, countries)
         findAllRoutes(rootNode, path, result, destination)
 
+        log.info("method=route result={}", result)
         return if (result.isEmpty())
             null
         else
