@@ -59,40 +59,38 @@ class RouteService: IRouteService {
             children.size >= 1
     }
 
-    private fun mapBorders(root: Node<String>, mappedBorders: MutableSet<String>, destination: String, countries: Countries) {
-        mappedBorders.add(root.value)
-        val country: CountriesItem  = countries.first{ country -> country.cca3 == root.value }
-        val borders: List<String>?  = country.borders
-
+    private fun mapBorders(parent: Node<String>, mappedBorders: MutableSet<String>, destination: String, countries: Countries){
+        mappedBorders.add(parent.value)
+        val country: CountriesItem = countries.first { country -> country.cca3 == parent.value }
+        val borders: List<String>? = country.borders
         if (borders.isNullOrEmpty())
             return
         else
             borders.filter { border -> border !in mappedBorders }.forEach {
-                val child = Node(it)
-                root.addChild(child)
+                val childNode = Node(it)
+                parent.addChild(childNode)
             }
 
-        for (node in root.children) {
-            if (node.value == destination)
+        for (node in parent.children) {
+            if (node.value == destination){
                 continue
+            }
             mapBorders(node, mappedBorders, destination, countries)
         }
     }
 
     private fun findAllRoutes(root: Node<String>, path: MutableList<String>, result: MutableList<List<String>>, destination: String): MutableList<List<String>> {
         path.add(root.value)
-
-        if (!root.hasChildren()) {
+        if (!root.hasChildren()){
             if (path.contains(destination))
                 result.add(path.map { it })
             path.removeLast()
         } else {
-            for (child in root.children) {
-                findAllRoutes(root, path, result, destination)
+            for (child in root.children){
+                findAllRoutes(child, path, result, destination)
             }
             path.removeLast()
         }
-
-        return  result
+        return result
     }
 }

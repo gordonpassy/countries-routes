@@ -38,7 +38,7 @@ class RouteControllerTest {
     fun `Returns single route if there is land crossing`() {
         val route = listOf("KEN", "UGA", "RWA")
 
-        Mockito.`when`(routeService.route("KEN", "UGA")).thenReturn(route)
+        Mockito.`when`(routeService.route("KEN", "RWA")).thenReturn(route)
 
         val result = routeController.route("KEN", "RWA")
 
